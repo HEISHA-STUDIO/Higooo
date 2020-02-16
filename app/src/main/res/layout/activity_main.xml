@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <TextView
+        android:id="@+id/prodect_model"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Waiting for connection"
+        android:textSize="20dp"
+        android:textColor="@color/colorPrimary"
+        android:textStyle="bold"
+        android:layout_marginTop="50dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/rc_status"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Remote controller: OFF"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/prodect_model"
+        android:layout_marginTop="20dp" />
+
+    <TextView
+        android:id="@+id/drone_status"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="DJI Drone: OFF"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/rc_status"
+        android:layout_marginTop="20dp" />
+
+    <Button
+        android:id="@+id/btn_rc"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:text="TURN ON RC"
+        android:background="@color/colorPrimary"
+        android:textColor="#FFF"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@id/btn_drone"
+        android:layout_marginTop="200dp" />
+
+    <Button
+        android:id="@+id/btn_drone"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:text="TURN ON DRONE"
+        android:background="@color/colorPrimary"
+        android:textColor="#FFF"
+        app:layout_constraintLeft_toRightOf="@id/btn_rc"
+        app:layout_constraintTop_toTopOf="@id/btn_rc"
+        app:layout_constraintRight_toLeftOf="@id/btn_lock"/>
+
+    <Button
+        android:id="@+id/btn_lock"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:text="LOCK"
+        android:background="@color/colorPrimary"
+        android:textColor="#FFF"
+        app:layout_constraintLeft_toRightOf="@id/btn_drone"
+        app:layout_constraintTop_toTopOf="@id/btn_drone"
+        app:layout_constraintRight_toLeftOf="@id/btn_unlock"/>
+
+    <Button
+        android:id="@+id/btn_unlock"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:text="UNLOCK"
+        android:background="@color/colorPrimary"
+        android:textColor="#FFF"
+        app:layout_constraintLeft_toRightOf="@id/btn_lock"
+        app:layout_constraintTop_toTopOf="@id/btn_lock"
+        app:layout_constraintRight_toLeftOf="@id/btn_charge"/>
+
+    <Button
+        android:id="@+id/btn_charge"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:text="CHARGE"
+        android:background="@color/colorPrimary"
+        android:textColor="#FFF"
+        app:layout_constraintLeft_toRightOf="@id/btn_unlock"
+        app:layout_constraintTop_toTopOf="@id/btn_unlock"
+        app:layout_constraintRight_toRightOf="parent"/>
+
+    <Button
+        android:id="@+id/btn_flight"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:text="Flight View"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="300dp"
+        android:enabled="true"/>
+</androidx.constraintlayout.widget.ConstraintLayout>
