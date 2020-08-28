@@ -20,9 +20,9 @@ import org.eclipse.paho.client.mqttv3.MqttMessage;
 public class MQTTService extends Service {
 
     private static final String TAG = "HEISHA";
-    public static final String TOPIC_PUB = "5c546fd203d74f68-s";
-    public static final String TOPIC_SUB = "5c546fd203d74f68-p";
-    public static final String TOPIC_VIDEO = "5c546fd203d74f68-v";
+    public static final String TOPIC_PUB = "96827e77dfef4cc6-s";
+    public static final String TOPIC_SUB = "96827e77dfef4cc6-p";
+    public static final String TOPIC_VIDEO = "96827e77dfef4cc6-v";
 
     private static MqttAndroidClient client;
     private MqttConnectOptions conOpt;
@@ -49,7 +49,7 @@ public class MQTTService extends Service {
     private void initConnect() {
         String uri = "tcp://" + host;
 
-        client = new MqttAndroidClient(this, uri, "higooo");
+        client = new MqttAndroidClient(this, uri, "heisha123456");
         client.setCallback(mqttCallback);
 
         conOpt = new MqttConnectOptions();

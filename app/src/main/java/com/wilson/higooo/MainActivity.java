@@ -39,7 +39,7 @@ import dji.sdk.sdkmanager.DJISDKManager;
 import static com.DLink.messages.dlink_msg_drone_attitude.DLINK_MSG_ID_DRONE_ATTITUDE;
 import static com.DLink.messages.dlink_msg_drone_battery_status.DLINK_MSG_ID_DRONE_BATTERY_STATUS;
 import static com.DLink.messages.dlink_msg_drone_global_position.DLINK_MSG_ID_DRONE_GLOBAL_POSITION;
-import static com.DLink.messages.dlink_msg_drone_status.DLINK_MSG_ID_drone_status;
+import static com.DLink.messages.dlink_msg_drone_status.DLINK_MSG_ID_DRONE_STATUS;
 import static com.DLink.messages.dlink_msg_gps_status.DLINK_MSG_ID_GPS_STATUS;
 import static com.DLink.messages.dlink_msg_heartbeat.DLINK_MSG_ID_HEARTBEAT;
 import static com.DLink.messages.dlink_msg_mission_ack.DLINK_MSG_ID_MISSION_ACK;
@@ -86,6 +86,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private Button btn_charge;
     private Button btn_flight_view;
 
+    MQTTService.VideoFeeder videoFeeder = new MQTTService.VideoFeeder() {
+        @Override
+        public void onDataReceive(byte[] data) {
+            Log.i(TAG, "C: " + data[0] + " DD: " + (data[1]+1) + " L: " + data.length);
+        }
+    };
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -123,6 +130,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             Intent intent = new Intent(this, MQTTService.class);
             bindService(intent, mqttServcieConnection, Context.BIND_AUTO_CREATE);
         }
+
+        //MQTTService.setVideoFeeder(videoFeeder);
 
         new Thread(updateUI).start();
     }
@@ -241,6 +250,21 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 Intent intent = new Intent(this, FlightActivity.class);
                 startActivity(intent);
                 break;
+            case R.id.btn_rc:
+                DLinkBridge.getInstance().sendTurnOnOffRCCMD();
+                break;
+            case R.id.btn_drone:
+                DLinkBridge.getInstance().sendTurnOnOffDroneCMD();
+                break;
+            case R.id.btn_lock:
+                DLinkBridge.getInstance().sendLockCMD();
+                break;
+            case R.id.btn_unlock:
+                DLinkBridge.getInstance().sendUnLockCMD();
+                break;
+            case R.id.btn_charge:
+                DLinkBridge.getInstance().sendChargeCMD();
+                break;
         }
     }
 
@@ -270,7 +294,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case DLINK_MSG_ID_DRONE_BATTERY_STATUS:
             case DLINK_MSG_ID_DRONE_ATTITUDE:
             case DLINK_MSG_ID_DRONE_GLOBAL_POSITION:
-            case DLINK_MSG_ID_drone_status:
+            case DLINK_MSG_ID_DRONE_STATUS:
             case DLINK_MSG_ID_GPS_STATUS:
                 DLinkBridge.getInstance().handle_message(packet);
                 break;
@@ -339,4 +363,5 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             }
         }
     };
+
 }

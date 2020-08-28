@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.graphics.Color;
 import android.graphics.SurfaceTexture;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.util.Log;
 import android.view.TextureView;
 import android.view.View;
@@ -88,6 +89,10 @@ public class FlightActivity extends Activity implements TextureView.SurfaceTextu
             droneLocationLon = drone_global_positon.lon * 1e-7;
             LatLng pos = new LatLng(droneLocationLat, droneLocationLon);
 
+            if(drone_global_positon.lat == 0 && drone_global_positon.lon == 0) {
+                return;
+            }
+
             final MarkerOptions markerOptions = new MarkerOptions();
             markerOptions.position(pos);
             markerOptions.icon(BitmapDescriptorFactory.fromResource(R.drawable.aircraft));
@@ -132,7 +137,10 @@ public class FlightActivity extends Activity implements TextureView.SurfaceTextu
     MQTTService.VideoFeeder videoFeeder = new MQTTService.VideoFeeder() {
         @Override
         public void onDataReceive(byte[] data) {
-            //Log.i(TAG, "Video: " + data.length);
+            if(djiCodecManager != null) {
+                djiCodecManager.sendDataToDecoder(data, data.length, DJICodecManager.VideoSource.UNKNOWN);
+                Log.i(TAG, "V: " + data[0] + data[1] + data[2] + data[3] + data[4] + data[5]);
+            }
         }
     };
 
@@ -165,7 +173,10 @@ public class FlightActivity extends Activity implements TextureView.SurfaceTextu
             @Override
             public void onReceive(byte[] bytes, int i) {
                 if(null != djiCodecManager) {
-                    djiCodecManager.sendDataToDecoder(bytes, i);
+                    //djiCodecManager.sendDataToDecoder(bytes, i);
+                    String str = "COUNT: " + i;
+
+                    MQTTService.publishTopic(MQTTService.TOPIC_PUB, str.getBytes());
                 }
             }
         };
@@ -256,7 +267,8 @@ public class FlightActivity extends Activity implements TextureView.SurfaceTextu
                 mVideoSurface.setSurfaceTextureListener(this);
             }
             if(!product.getModel().equals(Model.UNKNOWN_AIRCRAFT)) {
-                VideoFeeder.getInstance().getPrimaryVideoFeed().addVideoDataListener(mReceivedVideoDataListener);
+                //VideoFeeder.getInstance().getPrimaryVideoFeed().addVideoDataListener(mReceivedVideoDataListener);
+                //VideoFeeder.getInstance().getSecondaryVideoFeed().addVideoDataListener(mReceivedVideoDataListener);
             }
         }
     }
@@ -308,6 +320,8 @@ public class FlightActivity extends Activity implements TextureView.SurfaceTextu
                 break;
             case R.id.btn_takeoff:
                 MissionPlanner.getInstance().startMission();
+                //VideoFeeder.getInstance().getSecondaryVideoFeed().addVideoDataListener(mReceivedVideoDataListener);
+                //VideoFeeder.getInstance().provideTranscodedVideoFeed().addVideoDataListener(mReceivedVideoDataListener);
                 break;
         }
     }

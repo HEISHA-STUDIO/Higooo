@@ -3,7 +3,9 @@ package com.wilson.higooo;
 import android.util.Log;
 
 import com.DLink.DLinkPacket;
+import com.DLink.enums.CMD_ID;
 import com.DLink.enums.HEISHA_PRODUCT_MODEL;
+import com.DLink.messages.dlink_msg_command_short;
 import com.DLink.messages.dlink_msg_drone_attitude;
 import com.DLink.messages.dlink_msg_drone_battery_status;
 import com.DLink.messages.dlink_msg_drone_global_position;
@@ -15,7 +17,7 @@ import com.DLink.messages.dlink_msg_rc_battery_status;
 import static com.DLink.messages.dlink_msg_drone_attitude.DLINK_MSG_ID_DRONE_ATTITUDE;
 import static com.DLink.messages.dlink_msg_drone_battery_status.DLINK_MSG_ID_DRONE_BATTERY_STATUS;
 import static com.DLink.messages.dlink_msg_drone_global_position.DLINK_MSG_ID_DRONE_GLOBAL_POSITION;
-import static com.DLink.messages.dlink_msg_drone_status.DLINK_MSG_ID_drone_status;
+import static com.DLink.messages.dlink_msg_drone_status.DLINK_MSG_ID_DRONE_STATUS;
 import static com.DLink.messages.dlink_msg_gps_status.DLINK_MSG_ID_GPS_STATUS;
 import static com.DLink.messages.dlink_msg_heartbeat.DLINK_MSG_ID_HEARTBEAT;
 import static com.DLink.messages.dlink_msg_rc_battery_status.DLINK_MSG_ID_RC_BATTERY_STATUS;
@@ -78,7 +80,7 @@ public class DLinkBridge {
                     dLinkListener.onGPSUpdate(gps_status);
                 }
                 break;
-            case DLINK_MSG_ID_drone_status:
+            case DLINK_MSG_ID_DRONE_STATUS:
                 dlink_msg_drone_status drone_status = (dlink_msg_drone_status)packet.unpack();
                 if(null != dLinkListener) {
                     dLinkListener.onDroneStatusUpdate(drone_status);
@@ -116,6 +118,46 @@ public class DLinkBridge {
         void onDroneAttitudeUpdate(dlink_msg_drone_attitude drone_attitude);
         void onRCBatteryUpdate(dlink_msg_rc_battery_status rc_battery_status);
         void onGPSUpdate(dlink_msg_gps_status gps_status);
+    }
+
+    public void sendTurnOnOffRCCMD() {
+        dlink_msg_command_short cmd = new dlink_msg_command_short();
+        cmd.command = CMD_ID.CHARGE_PAD_TURN_ON_OFF_RC;
+
+        DLinkPacket packet = cmd.pack();
+        sendDlinkPacket(packet);
+    }
+
+    public void sendTurnOnOffDroneCMD() {
+        dlink_msg_command_short cmd= new dlink_msg_command_short();
+        cmd.command = CMD_ID.CHARGE_PAD_TURN_ON_OFF_DRONE;
+
+        DLinkPacket packet = cmd.pack();
+        sendDlinkPacket(packet);
+    }
+
+    public void sendLockCMD() {
+        dlink_msg_command_short cmd = new dlink_msg_command_short();
+        cmd.command = CMD_ID.CHARGE_PAD_LOCK;
+
+        DLinkPacket packet = cmd.pack();
+        sendDlinkPacket(packet);
+    }
+
+    public void sendUnLockCMD() {
+        dlink_msg_command_short cmd = new dlink_msg_command_short();
+        cmd.command = CMD_ID.CHARGE_PAD_UNLOCK;
+
+        DLinkPacket packet = cmd.pack();
+        sendDlinkPacket(packet);
+    }
+
+    public void sendChargeCMD() {
+        dlink_msg_command_short cmd = new dlink_msg_command_short();
+        cmd.command = CMD_ID.CHARGE_PAD_CHARGE;
+
+        DLinkPacket packet = cmd.pack();
+        sendDlinkPacket(packet);
     }
 
 }

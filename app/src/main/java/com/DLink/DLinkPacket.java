@@ -170,7 +170,7 @@ public class DLinkPacket implements Serializable {
             case dlink_msg_drone_attitude.DLINK_MSG_ID_DRONE_ATTITUDE:
                 return  new dlink_msg_drone_attitude(this);
                  
-            case dlink_msg_drone_status.DLINK_MSG_ID_drone_status:
+            case dlink_msg_drone_status.DLINK_MSG_ID_DRONE_STATUS:
                 return  new dlink_msg_drone_status(this);
                  
             case dlink_msg_gps_status.DLINK_MSG_ID_GPS_STATUS:

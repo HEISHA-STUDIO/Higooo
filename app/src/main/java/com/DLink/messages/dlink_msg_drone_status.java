@@ -4,7 +4,7 @@
  * java dlink generator tool. It should not be modified by hand.
  */
 
-// MESSAGE drone_status PACKING
+// MESSAGE DRONE_STATUS PACKING
 package com.DLink.messages;
 import com.DLink.DLinkPacket;
 import com.DLink.DLinkMessage;
@@ -17,9 +17,9 @@ import com.DLink.DLinkPayload;
 */
 public class dlink_msg_drone_status extends DLinkMessage{
 
-    public static final int DLINK_MSG_ID_drone_status = 6;
+    public static final int DLINK_MSG_ID_DRONE_STATUS = 6;
     public static final int DLINK_MSG_LENGTH = 2;
-    private static final long serialVersionUID = DLINK_MSG_ID_drone_status;
+    private static final long serialVersionUID = DLINK_MSG_ID_DRONE_STATUS;
 
 
       
@@ -42,7 +42,7 @@ public class dlink_msg_drone_status extends DLinkMessage{
         DLinkPacket packet = new DLinkPacket(DLINK_MSG_LENGTH);
         packet.sysid = 0;
         packet.compid = 0;
-        packet.msgid = DLINK_MSG_ID_drone_status;
+        packet.msgid = DLINK_MSG_ID_DRONE_STATUS;
               
         packet.payload.putUnsignedByte(armed);
               
@@ -69,7 +69,7 @@ public class dlink_msg_drone_status extends DLinkMessage{
     * Constructor for a new message, just initializes the msgid
     */
     public dlink_msg_drone_status(){
-        msgid = DLINK_MSG_ID_drone_status;
+        msgid = DLINK_MSG_ID_DRONE_STATUS;
     }
 
     /**
@@ -80,7 +80,7 @@ public class dlink_msg_drone_status extends DLinkMessage{
     public dlink_msg_drone_status(DLinkPacket dLinkPacket){
         this.sysid = dLinkPacket.sysid;
         this.compid = dLinkPacket.compid;
-        this.msgid = DLINK_MSG_ID_drone_status;
+        this.msgid = DLINK_MSG_ID_DRONE_STATUS;
         unpack(dLinkPacket.payload);        
     }
 
@@ -89,7 +89,7 @@ public class dlink_msg_drone_status extends DLinkMessage{
     * Returns a string with the MSG name and data
     */
     public String toString(){
-        return "DLINK_MSG_ID_drone_status - sysid:"+sysid+" compid:"+compid+" armed:"+armed+" warning:"+warning+"";
+        return "DLINK_MSG_ID_DRONE_STATUS - sysid:"+sysid+" compid:"+compid+" armed:"+armed+" warning:"+warning+"";
     }
 }
         
